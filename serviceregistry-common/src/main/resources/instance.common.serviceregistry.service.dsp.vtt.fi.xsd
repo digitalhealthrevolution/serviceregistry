@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="instance.common.serviceregistry.service.dsp.vtt.fi" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="instance.common.serviceregistry.service.dsp.vtt.fi" xmlns:dspsrvregcomminst="instance.common.serviceregistry.service.dsp.vtt.fi" xmlns:dspsrvfwcomm="common.serviceframework.dsp.vtt.fi" xmlns:dspsfwschema="schema.common.serviceframework.dsp.vtt.fi">
+	<xsd:import namespace="schema.common.serviceframework.dsp.vtt.fi" schemaLocation="schema.common.serviceframework.dsp.vtt.fi.xsd"/>
+	<xsd:import namespace="common.serviceframework.dsp.vtt.fi" schemaLocation="common.serviceframework.dsp.vtt.fi.xsd"/>
+	<xsd:complexType name="Availability">
+		<xsd:annotation>
+			<xsd:documentation>Main class for holding service instance's self reported or inspected availability information and monitored service parameters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="selfReportedAvailability" type="dspsrvfwcomm:ServiceAvailability" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Availability information reported by the service instance itself</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="inspectedAvailability" type="dspsrvfwcomm:ServiceAvailability" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Service information retrieved and inspected from the service by service registry's availability monitoring component</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ServiceParameter" type="ServiceParameter" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AvailabilityRequestEndPoint">
+		<xsd:annotation>
+			<xsd:documentation>Main class for holding service instance's availability request endpoint information</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="availabilityRequestURI" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Availability request URI of the service instance for requesting availability information. Service instance can implement availability information request endpoint or report the information by itself.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BindingRequestEndPoint">
+		<xsd:annotation>
+			<xsd:documentation>Main class for holding service instance's binding request endpoint information</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="bindingRequestURI" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Binding URI of the service instance for requesting binding information. Service instance can implement binding information request endpoint or report the information by itself</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceAccessEndPoint">
+		<xsd:annotation>
+			<xsd:documentation>Main class for holding service instance's service access endpoint information</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="serviceAccessURI" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>URI for the service instance for binding and service access</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Binding" type="dspsrvfwcomm:Binding" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Availability" type="Availability" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceInstance">
+		<xsd:annotation>
+			<xsd:documentation>Main class holding information for the service instance in the service registry</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="serviceInstanceId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Unique identifier for the service instance that implements the service identified by service id.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="serviceInstanceTitle" type="dspsfwschema:stringMaxLength50" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Well descriptive title of the service instance</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="hostingEntity" type="dspsfwschema:stringMaxLength50" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Organizational name of the entity hosting the service instance</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="serviceInstanceVersion" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Version of the provided service instance</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="createdOnDate" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date this service instance was registered</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="modifiedOnDate" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date this service instance was modified last time</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="createdByUserId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="modifiedByUserId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="ServiceAccessEndPoint" type="ServiceAccessEndPoint" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="BindingRequestEndPoint" type="BindingRequestEndPoint" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="AvailabilityRequestEndPoint" type="AvailabilityRequestEndPoint" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceParameter">
+		<xsd:annotation>
+			<xsd:documentation>Remotely monitored service parameters as key-value pairs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="serviceParameterKey" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="serviceParameterValue" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

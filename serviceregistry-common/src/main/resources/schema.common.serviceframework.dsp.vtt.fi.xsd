@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="schema.common.serviceframework.dsp.vtt.fi" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="schema.common.serviceframework.dsp.vtt.fi" xmlns:dspsfwschema="schema.common.serviceframework.dsp.vtt.fi" xmlns:dspsrvfwschema="schema.common.serviceframework.dsp.vtt.fi">
+	<xsd:simpleType name="stringMaxLength1000">
+		<xsd:annotation>
+			<xsd:documentation>Service framework schema type for string with maximum length of 1000 characters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="stringMaxLength30">
+		<xsd:annotation>
+			<xsd:documentation>Service framework schema type for string with maximum length of 30 characters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="stringMaxLength50">
+		<xsd:annotation>
+			<xsd:documentation>Service framework schema type for string with maximum length of 50 characters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="timeStamp">
+		<xsd:annotation>
+			<xsd:documentation>Service framework schema type for time stamps. UNIX epoch time in milliseconds.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:long"/>
+	</xsd:simpleType>
+</xsd:schema>

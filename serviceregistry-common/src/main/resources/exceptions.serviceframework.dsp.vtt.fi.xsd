@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="exceptions.serviceframework.dsp.vtt.fi" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="exceptions.serviceframework.dsp.vtt.fi" xmlns:dspsrvfwexp="exceptions.serviceframework.dsp.vtt.fi" xmlns:dspsfwschema="schema.common.serviceframework.dsp.vtt.fi">
+	<xsd:import namespace="schema.common.serviceframework.dsp.vtt.fi" schemaLocation="schema.common.serviceframework.dsp.vtt.fi.xsd"/>
+	<xsd:complexType name="AvailabilityNotAvailableException">
+		<xsd:annotation>
+			<xsd:documentation>Exception thrown if the requested availability information is not available. Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AvailabilityOperationException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="AvailabilityOperationException">
+		<xsd:annotation>
+			<xsd:documentation>Availability exception thrown when the service's availability information related operation failed. Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ServiceException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="BindingNotAllowedException">
+		<xsd:annotation>
+			<xsd:documentation>Binding exception thrown when creation/update/deletion of the binding is not allowed. Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BindingOperationException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="BindingOperationException">
+		<xsd:annotation>
+			<xsd:documentation>Binding exception thrown if the binding request fails on the service. Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ServiceException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="NotAuthorizedException">
+		<xsd:annotation>
+			<xsd:documentation>Exception thrown if the service operation attempted is not authorized with the provided credentials or for other reason. Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ServiceException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServerErrorException">
+		<xsd:annotation>
+			<xsd:documentation>Exception thrown if the service operation attempted reached other server side exception. Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ServiceException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceException" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Abstract service exception base for all service framework related exceptions</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="exceptionCode" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Code for the occurred exception as defined by each service</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="exceptionReason" type="dspsfwschema:stringMaxLength1000" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Reason for the occurred exception</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ServiceException" type="ServiceException" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

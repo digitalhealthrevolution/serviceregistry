@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="exceptions.common.serviceregistry.service.dsp.vtt.fi" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="exceptions.common.serviceregistry.service.dsp.vtt.fi" xmlns:srvregexp="exceptions.common.serviceregistry.service.dsp.vtt.fi" xmlns:dspsrvfwexp="exceptions.serviceframework.dsp.vtt.fi" xmlns:dspsfwschema="schema.common.serviceframework.dsp.vtt.fi">
+	<xsd:import namespace="exceptions.serviceframework.dsp.vtt.fi" schemaLocation="exceptions.serviceframework.dsp.vtt.fi.xsd"/>
+	<xsd:complexType name="ServiceDiscoveryException">
+		<xsd:annotation>
+			<xsd:documentation>Exception thrown when service discovery operation fails. Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="dspsrvfwexp:ServiceException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceRegistrationDoesNotExistException">
+		<xsd:annotation>
+			<xsd:documentation>Exception thrown if the targeted service description or instance registration does not exist.  Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="dspsrvfwexp:ServiceException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceRegistrationException">
+		<xsd:annotation>
+			<xsd:documentation>Exception thrown if service description or instance registration operation fails. Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="dspsrvfwexp:ServiceException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceRegistrationExistsException">
+		<xsd:annotation>
+			<xsd:documentation>Exception thrown if the provided service instance or description is already registered in the system.  Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="dspsrvfwexp:ServiceException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceRegistrationUserInvalidException">
+		<xsd:annotation>
+			<xsd:documentation>Exception thrown if the provided user information is invalid or does not exist in the user profiles.  Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="dspsrvfwexp:ServiceException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceReportingException">
+		<xsd:annotation>
+			<xsd:documentation>Exception thrown if availability or binding reporting operation fails. Cause object may provide detailed information about the nature of the exception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="dspsrvfwexp:ServiceException">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

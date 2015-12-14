@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="common.serviceframework.dsp.vtt.fi" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="common.serviceframework.dsp.vtt.fi" xmlns:dspsrvfwcomm="common.serviceframework.dsp.vtt.fi" xmlns:dspsfwschema="schema.common.serviceframework.dsp.vtt.fi">
+	<xsd:import namespace="schema.common.serviceframework.dsp.vtt.fi" schemaLocation="schema.common.serviceframework.dsp.vtt.fi.xsd"/>
+	<xsd:complexType name="Binding">
+		<xsd:annotation>
+			<xsd:documentation>Common class recording all service bindings to this service </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="bindingId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Identifier for the binding</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="boundByServiceId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Unique service identifier of the service binding to this</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="boundByServiceInstanceId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Unique service instance identifier of the service binding to this</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="requestedByUserId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Binding requesting user's user identification.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="authorizedByUserId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Binding authorizing user's user identification.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="requestedOnDate" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date this binding was requested on.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="modifiedOnDate" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date this binding was modified.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="statusRequested" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Binding authorization is in requested state.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="statusAuthorized" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Binding is in authorized state.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="statusPending" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Binding authorization is in pending state.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="statusActive" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Binding is in active state.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ROAServiceInterface" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Abstract service interface for ROA style services</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="Service" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Abstract main class for the core service implementations with all required details</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="serviceInstanceId" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Unique identifier for the service instance  as issued by the service registry</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="serviceId" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Unique identifier for the service</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="currentAvailability" type="ServiceAvailability" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="soaif" type="SOAServiceInterface" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="roaif" type="ROAServiceInterface" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="grantedBindings" type="Binding" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceAvailability">
+		<xsd:annotation>
+			<xsd:documentation>Common class defining all required service availability attributes</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="averageExecutionTime" type="xsd:int" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Calculated average service execution time from the previous observed execution times in seconds [sec]</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="averageLatency" type="xsd:int" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Calculated average service latency time from the previous observed latency times in seconds [sec]</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="maxResponseTime" type="xsd:int" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Maximum observed response time of the service in seconds [sec]</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="averageGoodput" type="xsd:int" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Calculated average service goodput from the previous observed goodput values in messages per seconds [msg/sec]</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="timeStamp" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Time stamp of this service availability information in UNIX EPOCH seconds [sec]</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="uptimeHours" type="xsd:long" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Observed uptime of this service in hours [hrs]</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="serviceActive" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Service is active when its instance is running and serving requests.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SOAServiceInterface" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Abstract service interface for SOA style services</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:complexType>
+</xsd:schema>

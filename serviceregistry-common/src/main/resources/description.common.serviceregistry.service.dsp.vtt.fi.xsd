@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="description.common.serviceregistry.service.dsp.vtt.fi" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="description.common.serviceregistry.service.dsp.vtt.fi" xmlns:dspsrvregcommdesc="description.common.serviceregistry.service.dsp.vtt.fi" xmlns:dspsrvfwcomm="common.serviceframework.dsp.vtt.fi" xmlns:dspsfwschema="schema.common.serviceframework.dsp.vtt.fi" xmlns:dspsrvfwschema="schema.common.serviceregistry.service.dsp.vtt.fi">
+	<xsd:import namespace="schema.common.serviceregistry.service.dsp.vtt.fi" schemaLocation="schema.common.serviceregistry.service.dsp.vtt.fi.xsd"/>
+	<xsd:import namespace="schema.common.serviceframework.dsp.vtt.fi" schemaLocation="schema.common.serviceframework.dsp.vtt.fi.xsd"/>
+	<xsd:import namespace="common.serviceframework.dsp.vtt.fi" schemaLocation="common.serviceframework.dsp.vtt.fi.xsd"/>
+	<xsd:complexType name="AvailabilityDeclaration">
+		<xsd:annotation>
+			<xsd:documentation>Main class for the declared availability by the developer for this service </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="declaredAvailability" type="dspsrvfwcomm:ServiceAvailability" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Declared service availability</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Dependency">
+		<xsd:annotation>
+			<xsd:documentation>Dependencies that this service is depending on</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dependencyId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Unique identifier of the depency</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dependsOnServiceId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Unique identifier of the service that is depended on</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HumanReadableDescription">
+		<xsd:annotation>
+			<xsd:documentation>Class for the human readable service description like web pages or other documentation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="humanReadableDescriptionURI" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>URI for the provided human readable description or documentation</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="humanReadableDescription" type="dspsfwschema:stringMaxLength1000" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Provided human readable description or document content</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SemanticServiceDescription">
+		<xsd:annotation>
+			<xsd:documentation>Semantic description of the service. Reserved for future used.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ontologyId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="semanticTags" type="dspsfwschema:stringMaxLength30" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceDescription">
+		<xsd:annotation>
+			<xsd:documentation>Main entity for the identified and registered service</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="serviceDescriptionTitle" type="dspsfwschema:stringMaxLength50" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Well descriptive title of the service description</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="serviceDescriptionVersion" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Version identifier of the service description following developer's own format</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="serviceIconURI" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>URI to the logo representing the service in the registry</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="maturity" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Maturity of the service description</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="keywords" type="dspsfwschema:stringMaxLength30" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Selected set of keywords describing the service</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="serviceProviderId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Identification of the service provider</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="createdOnDate" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date this service description was created</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="modifiedOnDate" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date this service description was modified last time</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="modifiedByUserId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="createdByUserId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="ownerGroup" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Owner group id of service description</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AvailabilityDeclaration" type="AvailabilityDeclaration" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="Dependency" type="Dependency" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="HumanReadableDescription" type="HumanReadableDescription" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="SemanticServiceDescription" type="SemanticServiceDescription" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="TechnicalServiceDescription" type="TechnicalServiceDescription" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="UserRating" type="UserRating" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="UserFeedback" type="UserFeedback" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TechnicalServiceDescription">
+		<xsd:annotation>
+			<xsd:documentation>Main class for the technical service description</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="technicalDescriptionId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Unique identifier of the technical service description</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="technicalDescriptionURI" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>URI to the service description</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="implementedByServiceInstanceId" type="dspsfwschema:stringMaxLength30" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Service instance identifier array of the services that implement this technical description</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="technicalServiceAccessProtocol" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Service access protocol identifier intended to be used with the service technically described</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="technicalDescriptionFormat" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Format of the document that can be found behind the URI</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UserFeedback">
+		<xsd:annotation>
+			<xsd:documentation>Main class for user provided feedback for the service</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="userFeedbackId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Unique identifier of the user feed back</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="providedByUserId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>User id of the feedback provider</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="feedback" type="dspsfwschema:stringMaxLength1000" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Free text formed feedback by the user</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="userRating" type="dspsrvfwschema:ratingValue" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Rating value provided by the user for the service</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="createdOnDate" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date this user feedback was added</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UserRating">
+		<xsd:annotation>
+			<xsd:documentation>Class for the service user based ratings</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="rating" type="dspsrvfwschema:ratingValue" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>User provided average rating value</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

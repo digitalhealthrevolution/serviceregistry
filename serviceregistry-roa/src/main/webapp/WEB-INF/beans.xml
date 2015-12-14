@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs" 
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:security="http://www.springframework.org/schema/security" 
+       xsi:schemaLocation=" 
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd 
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <context:property-placeholder/>
+    <context:annotation-config/>
+    <bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer"/>
+    <bean class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer"/>
+    <bean id="springApplicationContext" class="fi.vtt.dsp.service.serviceregistry.impl.SpringApplicationContext"/>    
+    <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider"> 
+    </bean>
+    <!--Setting ObjectMapper to not serialize fields with null values, filtering will be easier-->
+    <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper">
+        <property name="serializationInclusion">
+            <value type="org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion">NON_NULL</value>
+        </property>		
+    </bean>
+    <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+    <!--JacksonJsonProvider is stupid enough of having f**ked up and non-Spring convenient setter for objectmapper-->
+    <bean id="caller" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="jsonProvider" />
+        <property name="targetMethod" value="setMapper" />
+        <property name="arguments">
+            <list>
+                <ref bean="objectMapper"/>
+            </list>
+        </property>
+    </bean>	
+    <bean id="mongoDB" class="fi.vtt.dsp.service.serviceregistry.impl.dao.MongoDBConnection" lazy-init="false">
+        <property name="dbUserName" value="${db.user}"></property>
+        <property name="dbPassword" value="${db.pwd}"></property>
+        <property name="dbName" value="${db.name}"></property>
+        <property name="dbCollectionName" value="serviceregistry"></property>
+        <property name="dbServerIP" value="${db.ip}"></property>
+        <property name="dbServerPort" value="${db.port}"></property>
+    </bean>
+    <bean id="UPmongoDB" class="fi.vtt.dsp.service.serviceregistry.impl.dao.MongoDBConnection" lazy-init="false">
+        <property name="dbUserName" value="${db.user}"></property>
+        <property name="dbPassword" value="${db.pwd}"></property>
+        <property name="dbName" value="${db.name}"></property>
+        <property name="dbCollectionName" value="serviceregistry.userprofiles"></property>
+        <property name="dbServerIP" value="${db.ip}"></property>
+        <property name="dbServerPort" value="${db.port}"></property>
+    </bean>	
+    <bean id="UGmongoDB" class="fi.vtt.dsp.service.serviceregistry.impl.dao.MongoDBConnection" lazy-init="false">
+        <property name="dbUserName" value="${db.user}"></property>
+        <property name="dbPassword" value="${db.pwd}"></property>
+        <property name="dbName" value="${db.name}"></property>
+        <property name="dbCollectionName" value="serviceregistry.usergroups"></property>
+        <property name="dbServerIP" value="${db.ip}"></property>
+        <property name="dbServerPort" value="${db.port}"></property>
+    </bean>	    
+    <bean id="KafkaLogMongoDB" class="fi.vtt.dsp.service.serviceregistry.impl.dao.MongoDBConnection" lazy-init="false">
+		<property name="dbUserName" value="${db.user}"></property>
+		<property name="dbPassword" value="${db.pwd}"></property>
+		<property name="dbName" value="${db.name}"></property>
+		<property name="dbCollectionName" value="serviceregistry.kafkalog"></property>
+		<property name="dbServerIP" value="${db.ip}"></property>
+		<property name="dbServerPort" value="${db.port}"></property>
+	</bean>
+    <bean id="serviceIconDownloader" class="fi.vtt.dsp.service.serviceregistry.impl.handlers.ServiceIconDownloader"/>        	
+    
+    <jaxrs:server id="services" address="/">
+        <jaxrs:outInterceptors>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.handlers.CrossDomainResponseHeaderInterceptor"/>
+			<bean class="org.apache.cxf.transport.common.gzip.GZIPOutInterceptor"/>
+        </jaxrs:outInterceptors>
+        <jaxrs:serviceBeans>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.ServiceRegistryRESTMain"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.ServiceRegistrationsResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.ServiceRegistrationResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.ServiceDescriptionResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.HumanReadableDescriptionResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.TechnicalServiceDescriptionsResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.TechnicalServiceDescriptionResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.DependencyResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.DependenciesResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.ServiceInstancesResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.ServiceInstanceResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.AvailabilityRequestEndpointResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.BindingRequestEndpointResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.ServiceAccessEndpointResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.BindingsResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.BindingResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.UserFeedbacksResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.UserFeedbackResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.InspectedAvailabilityResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.SelfReportedAvailabilityResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.UserProfilesResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.UserProfileResource" depends-on="mongoDB,UPmongoDB"/>                       
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.AvailabilityResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.UserGroupResource" depends-on="mongoDB,UPmongoDB,UGmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.UserGroupsResource" depends-on="mongoDB,UPmongoDB,UGmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.GroupRolesResource" depends-on="mongoDB,UPmongoDB,UGmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.search.BindingsSearchResource" depends-on="mongoDB,UPmongoDB"/> 
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.search.UserProfilesSearchResource" depends-on="mongoDB,UPmongoDB"/> 
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.search.ServiceRegistrationSearchResource" depends-on="mongoDB,UPmongoDB"/>			
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.search.ServiceInstancesSearchResource" depends-on="mongoDB,UPmongoDB"/>            
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.search.TechnicalServiceDescriptionsSearchResource" depends-on="mongoDB,UPmongoDB"/>
+			<bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.OutgoingBindingsResource" depends-on="mongoDB,UPmongoDB"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.impl.roa.LogResource" depends-on="mongoDB,UPmongoDB"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="jaxbProvider"/>
+            <ref bean="jsonProvider"/>  			
+            <bean class="org.apache.cxf.jaxrs.ext.search.SearchContextProvider"/>
+            <bean class="fi.vtt.dsp.service.serviceregistry.auth.handlers.AccessDeniedExceptionHandler"/>		
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <security:http create-session="stateless" use-expressions="true">
+        <security:intercept-url pattern="/" access="isAnonymous()"/>
+        <security:intercept-url pattern="/resourcedirectory/v1/**" method="POST" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/resourcedirectory/v1/**" method="PUT" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/resourcedirectory/v1/**" method="DELETE" access="isAuthenticated()"/>
+        <security:http-basic />
+    </security:http>
+
+    <bean id="accessTokenAuthenticationProvider" class="fi.vtt.dsp.service.serviceregistry.auth.handlers.AccessTokenAuthenticationProvider">
+		<property name="sharedSecret" value="${auth.secret}"></property>		
+	</bean>
+    <security:authentication-manager>
+        <security:authentication-provider ref="accessTokenAuthenticationProvider"/>
+    </security:authentication-manager>
+	
+    <bean id="userProfilesAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.UserProfilesResourceAuthorization"/>
+    <bean id="userProfileAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.UserProfileResourceAuthorization"/>				
+    <bean id="serviceRegistrationsAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.ServiceRegistrationsResourceAuthorization"/>
+    <bean id="serviceRegistrationAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.ServiceRegistrationResourceAuthorization"/>
+    <bean id="userFeedbacksAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.UserFeedbacksResourceAuthorization"/>
+    <bean id="userFeedbackAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.UserFeedbackResourceAuthorization"/>	
+    <bean id="serviceInstancesAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.ServiceInstancesResourceAuthorization"/>
+    <bean id="serviceInstanceAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.ServiceInstanceResourceAuthorization"/>
+    <bean id="bindingsAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.BindingsResourceAuthorization"/>
+    <bean id="bindingAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.BindingResourceAuthorization"/>	
+    <bean id="userGroupAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.UserGroupResourceAuthorization"/>		
+    <bean id="userGroupsAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.UserGroupsResourceAuthorization"/>
+    <bean id="groupRolesAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.GroupRolesResourceAuthorization"/>
+    <bean id="serviceRegistrationSearchAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.ServiceRegistrationSearchResourceAuthorization"/>
+    <bean id="logResourceAuth" class="fi.vtt.dsp.service.serviceregistry.auth.resource.LogResourceAuthorization"/>
+    <security:global-method-security pre-post-annotations="enabled"/>
+	
+</beans>

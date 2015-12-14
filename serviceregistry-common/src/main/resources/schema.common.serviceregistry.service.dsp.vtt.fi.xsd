@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="schema.common.serviceregistry.service.dsp.vtt.fi" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="schema.common.serviceregistry.service.dsp.vtt.fi" xmlns:dspsrvfwschema="schema.common.serviceregistry.service.dsp.vtt.fi">
+	<xsd:simpleType name="countryCode">
+		<xsd:annotation>
+			<xsd:documentation>Service registry schema type for country codes. Maximum length is 2 characters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="emailAddress">
+		<xsd:annotation>
+			<xsd:documentation>Service registry common schema type for email addresses</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(([a-zA-Z0-9_-])*\.([a-zA-Z0-9_-])+)+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ratingValue">
+		<xsd:annotation>
+			<xsd:documentation>Service registry schema type for rating values ranging from 0 to 100.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:int">
+			<xsd:maxInclusive value="100"/>
+			<xsd:minInclusive value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
