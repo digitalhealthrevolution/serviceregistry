@@ -9,9 +9,9 @@
 	
 	<xsd:complexType name="ServiceDataDescription">
 		<xsd:annotation>
-			<xsd:documentation>Semantic description of the service. Reserved for future used.</xsd:documentation>
+			<xsd:documentation>Collection of metadata about service data</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence>
+		<xsd:sequence>		
 			<xsd:element name="dataDescriptionId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>A Unique Identifier of the service data description</xsd:documentation>
@@ -57,10 +57,25 @@
 					<xsd:documentation>A name given to a service data description</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="issued" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date when this dataset description was created</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>			
+			<xsd:element name="modified" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date when this dataset description was modified</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>			
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="Dataset">
 		<xsd:sequence>
+			<xsd:element name="datasetId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a unique identifier of the dataset</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>			
 			<xsd:element name="accrualPeriodicity" type="xsd:string" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>The frequency at which the dataset is published</xsd:documentation>
@@ -79,11 +94,6 @@
 			<xsd:element name="distribution" type="Distribution" minOccurs="0" maxOccurs="unbounded">
 				<xsd:annotation>
 					<xsd:documentation>Reference to a specified distribution of the dataset</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="identifier" type="xsd:string" minOccurs="1" maxOccurs="1">
-				<xsd:annotation>
-					<xsd:documentation>a unique identifier of the dataset</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="issued" type="xsd:string" minOccurs="1" maxOccurs="1">
