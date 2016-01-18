@@ -27,7 +27,7 @@
 					<xsd:documentation>Free Text description of service data description</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="schemaID" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="schemaID" type="xsd:string" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>Link (URI) to a schema used by a service registry to create a unified service data</xsd:documentation>
 				</xsd:annotation>
