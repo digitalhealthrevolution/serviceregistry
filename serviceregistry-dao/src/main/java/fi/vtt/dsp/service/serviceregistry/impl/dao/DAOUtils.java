@@ -18,10 +18,10 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 import fi.vtt.dsp.service.serviceregistry.common.ServiceRegistryEntry;
+import fi.vtt.dsp.service.serviceregistry.common.data.ServiceDataDescription;
 import fi.vtt.dsp.service.serviceregistry.common.description.AvailabilityDeclaration;
 import fi.vtt.dsp.service.serviceregistry.common.description.Dependency;
 import fi.vtt.dsp.service.serviceregistry.common.description.HumanReadableDescription;
-import fi.vtt.dsp.service.serviceregistry.common.description.SemanticServiceDescription;
 import fi.vtt.dsp.service.serviceregistry.common.description.ServiceDescription;
 import fi.vtt.dsp.service.serviceregistry.common.description.TechnicalServiceDescription;
 import fi.vtt.dsp.service.serviceregistry.common.description.UserFeedback;
@@ -33,17 +33,20 @@ import fi.vtt.dsp.service.serviceregistry.common.instance.ServiceAccessEndPoint;
 import fi.vtt.dsp.service.serviceregistry.common.instance.ServiceInstance;
 import fi.vtt.dsp.serviceframework.common.Binding;
 import fi.vtt.dsp.serviceframework.common.ServiceAvailability;
-import java.util.Calendar;
 import org.apache.cxf.common.util.StringUtils;
 
 public final class DAOUtils {
 
-	private static final Logger LOGGER = Logger.getLogger(DAOUtils.class
-			.getName());
-        public static ObjectMapper mapper = new ObjectMapper();
+	private static final Logger LOGGER = Logger.getLogger(DAOUtils.class.getName());
+    public static ObjectMapper mapper = new ObjectMapper();
         
 	private DAOUtils() {
-		// not called
+
+		// HOX: This makes conversion to skip unknown fields usually caused by
+		// DB schema changes for development time
+		mapper.configure(
+				org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,
+				false);		
 	}
 
 	public static long getCurrentDateAsUnixEpoch() {
@@ -102,9 +105,6 @@ public final class DAOUtils {
 			if (servDesc.getHumanReadableDescription() == null) {
 				servDesc.setHumanReadableDescription(new HumanReadableDescription());
 			}
-			if (servDesc.getSemanticServiceDescription() == null) {
-				servDesc.setSemanticServiceDescription(new SemanticServiceDescription());
-			}
 			if (servDesc.getUserRating() == null) {
 				servDesc.setUserRating(new UserRating());
 			}
@@ -158,11 +158,6 @@ public final class DAOUtils {
 	public static <T> T convertDBObjToWSObjViaJSON(DBObject dbObj, Class<T> t)
 			throws DAOGeneralSystemFault {
 		T retWSObject = null;
-		// HOX: This makes conversion to skip unknown fields usually caused by
-		// DB schema changes for development time
-		mapper.configure(
-				org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,
-				false);
 		try {
 			// A minor hack to replace _id tag with serviceId :D
 			if (dbObj.containsField("_id")) {
@@ -187,6 +182,12 @@ public final class DAOUtils {
 	}
 
 	private static Object fixIds(Object obj) {
+		if (obj instanceof ServiceDataDescription) {
+			ServiceDataDescription castedObj = (ServiceDataDescription) obj;
+			if (StringUtils.isEmpty(castedObj.getDataDescriptionId())) {
+				castedObj.setDataDescriptionId(Integer.toString(obj.hashCode()));
+			}
+		}
 		if (obj instanceof TechnicalServiceDescription) {
 			TechnicalServiceDescription castedObj = (TechnicalServiceDescription) obj;
 			if (castedObj.getTechnicalDescriptionId() == null) {
@@ -237,9 +238,11 @@ public final class DAOUtils {
 					fixIds(uFB);
 				}
 
-				for (TechnicalServiceDescription techDesc : desc
-						.getTechnicalServiceDescription()) {
+				for (TechnicalServiceDescription techDesc : desc.getTechnicalServiceDescription()) {
 					fixIds(techDesc);
+				}
+				for (ServiceDataDescription dataDesc : desc.getServiceDataDescription()) {
+					fixIds(dataDesc);
 				}
 				for (Dependency dep : desc.getDependency()) {
 					fixIds(dep);
@@ -264,12 +267,6 @@ public final class DAOUtils {
 	@SuppressWarnings("unchecked")
 	public static <T> DBObject convertWSObjToDBObjViaJSON(Object obj, Class<T> t)
 			throws DAOGeneralSystemFault {
-		ObjectMapper mapper = new ObjectMapper();
-		// HOX: This makes conversion to skip unknown fields usually caused by
-		// DB schema changes for development time
-		mapper.configure(
-				org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,
-				false);
 		DBObject dbObject = null;
 		try {
 			fixIds(obj);

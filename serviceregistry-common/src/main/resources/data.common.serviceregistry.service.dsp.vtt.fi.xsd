@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema 
+	targetNamespace="data.common.serviceregistry.service.dsp.vtt.fi" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns="data.common.serviceregistry.service.dsp.vtt.fi" 
+	xmlns:dspsfwschema="schema.common.serviceframework.dsp.vtt.fi">
+	
+	<xsd:import namespace="schema.common.serviceframework.dsp.vtt.fi" schemaLocation="schema.common.serviceframework.dsp.vtt.fi.xsd"/>
+	
+	<xsd:complexType name="ServiceDataDescription">
+		<xsd:annotation>
+			<xsd:documentation>Semantic description of the service. Reserved for future used.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dataDescriptionId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>A Unique Identifier of the service data description</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>			
+			<xsd:element name="dataset" type="Dataset" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Reference to a dataset that is part of service data (dcat:Dataset)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Free Text description of service data description</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="schemaID" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Link (URI) to a schema used by a service registry to create a unified service data</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="serviceDataDescriptionUri" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Link to a document that describes the service data description based on the defined schema (schemaID) (=serviceDataDescriptionDocument)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="serviceSchema" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Link to the original schema of the service</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="subject" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Links (URI) to existing taxonomies, vocabularies and Linked Data resources describing the service</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="taxonomy" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Link to a taxonomy that is used to describe data of a service (dcat:tmeneTaxonomy &amp; qb:codeList)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>A name given to a service data description</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Dataset">
+		<xsd:sequence>
+			<xsd:element name="accrualPeriodicity" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>The frequency at which the dataset is published</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="contactPoint" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Relevant Contact Information of a dataset</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Free text description of the dataset. Possibly in multiple languages</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="distribution" type="Distribution" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Reference to a specified distribution of the dataset</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="identifier" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a unique identifier of the dataset</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="issued" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date when this dataset description was created</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="keyword" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>a keyword describing a dataset, possibly in multiple languages</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="language" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>the language of the dataset</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="modified" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Date when this dataset description was modified</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="publisher" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>entity responsible for making the dataset online</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="serviceDataType" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>input or output data (data sink or data source)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="spatial" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>spatial coverage of the dataset</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="structure" type="DataStructureSpecification" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Reference to a data structure specification that defines the dataset structure</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="subject" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Links (URI) to existing taxonomies, vocabularies and Linked Data resources describing the service</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="temporal" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>temporal period that the dataset covers</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="theme" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>the main category(ies) of the dataset, expressed as a semantic URI</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="title" type="dspsfwschema:stringMaxLength50" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>A name given to the dataset. In multiple languages</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Distribution">
+		<xsd:sequence>
+			<xsd:element name="accessURL" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a landing page, feed, API endpoint or other type of resource that gives access to the distribution of the dataset</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="distributionID" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a unique identifier of the distribution</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="downloadURL" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a file that contains the distribution of the dataset in a given format</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="format" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>the file format of the distribution, e.g. application/vnd.ms-exc</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="issued" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>date when this description was created</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="modified" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>ate when this description was modified</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rights" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>link to a license / rights document e.g. link to a service contract template</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="technicalDescriptionURI" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Link (URI) to the technical description document (defined in the technical service description)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a name given to the distribution</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DataStructureSpecification">
+		<xsd:sequence>
+			<xsd:element name="component" type="ComponentSpecification" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>reference to a specified component specification that is part of the data structure definition</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataStructureDefinitionID" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>unique identifier of a data structure definition</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>free text description of a data structure definition, possibly in multiple languages</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ComponentSpecification">
+		<xsd:sequence>
+			<xsd:element name="componentProperty" type="ComponentProperty" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>reference to a specified component property that is part of the component specification "hasComponentProperty"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="componentRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Indicated wether a component is required (true) or optional (false) by a data sink. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="componentSpecificationID" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>unique identifier of a component specification</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="label" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a name of a component</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ComponentProperty">
+		<xsd:sequence>
+			<xsd:element name="codeList" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>link (URI) to a definition of the code associated with a component property</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="componentPropertyID" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>unique identifier of the component property</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="concept" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>links (URI) to existing taxonomies, vocabularies describing the property</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="label" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>name of the component property</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="range" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>type of the value of the propertu (e.g. xsd:int)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Concept">
+		<xsd:sequence>
+			<xsd:element name="altLabel" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>an alternative lexical label for a resource, in a given language</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="broader" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Links to concept that is more general in meaning</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="closeMatch" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Links two concepts that are sufficiently similar. Used in semantic mappings between concepts in different schemas</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="conceptID" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a unique identifier of the concept</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="exactMatch" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Links two concepts that are similar. Used in semantic mappings between concepts in different schemas</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="hiddenLabel" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>a lexical label (e.g. misspellings, singular/plural) for a resource, accessible to free text, search operations</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="inScheme" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Relates to the concept scheme that is top level concept of</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="label" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a name given to the concept</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="notation" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a classification code</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="prefLabel" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>the preferred lexical label for a resource, in given language</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="relatedMatch" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Links two concepts that are related. Used in semantic mappings between concepts in different schemas</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConceptScheme">
+		<xsd:annotation>
+			<xsd:documentation>testing</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="conceptSchemeID" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a unique identifier of the concept scheme</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="hasTopConcept" type="Concept" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a top level concept in the concept scheme</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="label" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>a name given to the concept scheme</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>		
+</xsd:schema>		
