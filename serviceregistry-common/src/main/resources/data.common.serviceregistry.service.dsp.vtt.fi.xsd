@@ -27,7 +27,7 @@
 					<xsd:documentation>Free Text description of service data description</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="schemaID" type="xsd:string" minOccurs="1" maxOccurs="1">
+			<xsd:element name="schemaId" type="xsd:string" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>Link (URI) to a schema used by a service registry to create a unified service data</xsd:documentation>
 				</xsd:annotation>
@@ -57,7 +57,7 @@
 					<xsd:documentation>A name given to a service data description</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="issued" type="xsd:string" minOccurs="1" maxOccurs="1">
+			<xsd:element name="issued" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>Date when this dataset description was created</xsd:documentation>
 				</xsd:annotation>
@@ -96,7 +96,7 @@
 					<xsd:documentation>Reference to a specified distribution of the dataset</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="issued" type="xsd:string" minOccurs="1" maxOccurs="1">
+			<xsd:element name="issued" type="dspsfwschema:timeStamp" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>Date when this dataset description was created</xsd:documentation>
 				</xsd:annotation>
@@ -165,7 +165,7 @@
 					<xsd:documentation>a landing page, feed, API endpoint or other type of resource that gives access to the distribution of the dataset</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="distributionID" type="xsd:string" minOccurs="1" maxOccurs="1">
+			<xsd:element name="distributionId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>a unique identifier of the distribution</xsd:documentation>
 				</xsd:annotation>
@@ -214,7 +214,7 @@
 					<xsd:documentation>reference to a specified component specification that is part of the data structure definition</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="dataStructureDefinitionID" type="xsd:string" minOccurs="1" maxOccurs="1">
+			<xsd:element name="dataStructureDefinitionId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>unique identifier of a data structure definition</xsd:documentation>
 				</xsd:annotation>
@@ -238,7 +238,7 @@
 					<xsd:documentation>Indicated wether a component is required (true) or optional (false) by a data sink. </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="componentSpecificationID" type="xsd:string" minOccurs="1" maxOccurs="1">
+			<xsd:element name="componentSpecificationId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>unique identifier of a component specification</xsd:documentation>
 				</xsd:annotation>
@@ -257,7 +257,7 @@
 					<xsd:documentation>link (URI) to a definition of the code associated with a component property</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="componentPropertyID" type="xsd:string" minOccurs="1" maxOccurs="1">
+			<xsd:element name="componentPropertyId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>unique identifier of the component property</xsd:documentation>
 				</xsd:annotation>
@@ -296,7 +296,7 @@
 					<xsd:documentation>Links two concepts that are sufficiently similar. Used in semantic mappings between concepts in different schemas</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="conceptID" type="xsd:string" minOccurs="1" maxOccurs="1">
+			<xsd:element name="conceptId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>a unique identifier of the concept</xsd:documentation>
 				</xsd:annotation>
@@ -343,7 +343,7 @@
 			<xsd:documentation>testing</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="conceptSchemeID" type="xsd:string" minOccurs="1" maxOccurs="1">
+			<xsd:element name="conceptSchemeId" type="dspsfwschema:stringMaxLength30" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>a unique identifier of the concept scheme</xsd:documentation>
 				</xsd:annotation>
