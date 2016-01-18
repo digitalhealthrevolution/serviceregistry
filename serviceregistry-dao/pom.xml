@@ -2,18 +2,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>fi.vtt.dsh.serviceregistry</groupId>
+        <groupId>fi.vtt.dhr.serviceregistry</groupId>
         <artifactId>serviceregistry</artifactId>		
         <version>1.0-beta</version>		
     </parent>	
-    <groupId>fi.vtt.dsh.serviceregistry</groupId>
+    <groupId>fi.vtt.dhr.serviceregistry</groupId>
     <artifactId>serviceregistry-dao</artifactId>
     <packaging>jar</packaging>
     <name>Digital Service Registry DAO</name>
     <description>Digital Service Registry data access objects</description>
     <dependencies>
         <dependency>
-            <groupId>fi.vtt.dsh.serviceregistry</groupId>
+            <groupId>fi.vtt.dhr.serviceregistry</groupId>
             <artifactId>serviceregistry-common</artifactId>
         </dependency>		
         <dependency>
