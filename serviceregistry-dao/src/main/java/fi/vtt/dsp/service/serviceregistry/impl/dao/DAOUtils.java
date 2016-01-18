@@ -18,6 +18,11 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 import fi.vtt.dsp.service.serviceregistry.common.ServiceRegistryEntry;
+import fi.vtt.dsp.service.serviceregistry.common.data.ComponentProperty;
+import fi.vtt.dsp.service.serviceregistry.common.data.ComponentSpecification;
+import fi.vtt.dsp.service.serviceregistry.common.data.DataStructureSpecification;
+import fi.vtt.dsp.service.serviceregistry.common.data.Dataset;
+import fi.vtt.dsp.service.serviceregistry.common.data.Distribution;
 import fi.vtt.dsp.service.serviceregistry.common.data.ServiceDataDescription;
 import fi.vtt.dsp.service.serviceregistry.common.description.AvailabilityDeclaration;
 import fi.vtt.dsp.service.serviceregistry.common.description.Dependency;
@@ -186,6 +191,51 @@ public final class DAOUtils {
 			ServiceDataDescription castedObj = (ServiceDataDescription) obj;
 			if (StringUtils.isEmpty(castedObj.getDataDescriptionId())) {
 				castedObj.setDataDescriptionId(Integer.toString(obj.hashCode()));
+			}
+			for( Dataset ds : castedObj.getDataset() ) {
+				fixIds(ds);
+			}
+		}
+		if (obj instanceof Dataset) {
+			Dataset castedObj = (Dataset) obj;
+			if (StringUtils.isEmpty(castedObj.getDatasetId())) {
+				castedObj.setDatasetId(Integer.toString(obj.hashCode()));
+			}
+			for( DataStructureSpecification spec : castedObj.getStructure() ) {
+				fixIds(spec);
+			}
+			for( Distribution dist : castedObj.getDistribution() ) {
+				fixIds(dist);
+			}
+		}
+		if (obj instanceof DataStructureSpecification) {
+			DataStructureSpecification castedObj = (DataStructureSpecification) obj;
+			if (StringUtils.isEmpty(castedObj.getDataStructureDefinitionId())) {
+				castedObj.setDataStructureDefinitionId(Integer.toString(obj.hashCode()));
+			}
+			for( ComponentSpecification cSpec : castedObj.getComponent() ) {
+				fixIds(cSpec);
+			}
+		}
+		if (obj instanceof ComponentSpecification) {
+			ComponentSpecification castedObj = (ComponentSpecification) obj;
+			if (StringUtils.isEmpty(castedObj.getComponentSpecificationId())) {
+				castedObj.setComponentSpecificationId(Integer.toString(obj.hashCode()));
+			}
+			for( ComponentProperty cProp : castedObj.getComponentProperty() ) {
+				fixIds(cProp);
+			}
+		}
+		if (obj instanceof ComponentProperty) {
+			ComponentProperty castedObj = (ComponentProperty) obj;
+			if (StringUtils.isEmpty(castedObj.getComponentPropertyId())) {
+				castedObj.setComponentPropertyId(Integer.toString(obj.hashCode()));
+			}
+		}
+		if (obj instanceof Distribution) {
+			Distribution castedObj = (Distribution) obj;
+			if (StringUtils.isEmpty(castedObj.getDistributionId())) {
+				castedObj.setDistributionId(Integer.toString(obj.hashCode()));
 			}
 		}
 		if (obj instanceof TechnicalServiceDescription) {
