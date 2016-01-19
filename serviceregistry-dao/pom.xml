@@ -4,7 +4,7 @@
     <parent>
         <groupId>fi.vtt.dhr.serviceregistry</groupId>
         <artifactId>serviceregistry</artifactId>		
-        <version>1.0-beta</version>		
+        <version>1.0-beta.1</version>		
     </parent>	
     <groupId>fi.vtt.dhr.serviceregistry</groupId>
     <artifactId>serviceregistry-dao</artifactId>

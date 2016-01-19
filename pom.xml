@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>fi.vtt.dhr.serviceregistry</groupId>
     <artifactId>serviceregistry</artifactId>
-	<version>1.0-beta</version>
+	<version>1.0-beta.1</version>
     <packaging>pom</packaging>    
     <name>Digital Service Registry</name>
     <description>Main module of digital service registry</description>
