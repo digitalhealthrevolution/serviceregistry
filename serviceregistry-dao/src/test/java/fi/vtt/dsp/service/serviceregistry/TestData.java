@@ -1,6 +1,12 @@
 package fi.vtt.dsp.service.serviceregistry;
 
 import fi.vtt.dsp.service.serviceregistry.common.*;
+import fi.vtt.dsp.service.serviceregistry.common.data.ComponentProperty;
+import fi.vtt.dsp.service.serviceregistry.common.data.ComponentSpecification;
+import fi.vtt.dsp.service.serviceregistry.common.data.DataStructureSpecification;
+import fi.vtt.dsp.service.serviceregistry.common.data.Dataset;
+import fi.vtt.dsp.service.serviceregistry.common.data.Distribution;
+import fi.vtt.dsp.service.serviceregistry.common.data.ServiceDataDescription;
 import fi.vtt.dsp.service.serviceregistry.common.description.AvailabilityDeclaration;
 import fi.vtt.dsp.service.serviceregistry.common.description.Dependency;
 import fi.vtt.dsp.service.serviceregistry.common.description.HumanReadableDescription;
@@ -31,80 +37,6 @@ public class TestData {
 	private TestData() {
 	}
 
-	public static ServiceRegistryEntry getServiceTestEntry() {
-		ObjectFactory of = new ObjectFactory();
-		ServiceRegistryEntry sRegEntry = of.createServiceRegistryEntry();
-
-		ServiceDescription sDesc = new ServiceDescription();
-
-		sDesc.setMaturity("test");
-		sDesc.setServiceDescriptionTitle("Test service for testing functionalities of the Digital Service Registry including service registry");
-		sDesc.setServiceDescriptionVersion("1.0");
-		sDesc.setServiceIconURI("http://does.not.exist");
-		sDesc.setServiceProviderId("VTT-000000000001");
-		sDesc.getKeywords().add("test");
-		sDesc.getKeywords().add("dsp");
-		sDesc.getKeywords().add("registry");
-		sDesc.getKeywords().add("service");
-		sDesc.setOwnerGroup("public");
-
-		AvailabilityDeclaration avDec = new AvailabilityDeclaration();
-
-		ServiceAvailability declaredAvail = new ServiceAvailability();
-		declaredAvail.setAverageExecutionTime(0);
-		declaredAvail.setAverageGoodput(1);
-		declaredAvail.setAverageLatency(1);
-		declaredAvail.setMaxResponseTime(1);
-
-		avDec.setDeclaredAvailability(declaredAvail);
-		sDesc.setAvailabilityDeclaration(avDec);
-
-		HumanReadableDescription huuman = new HumanReadableDescription();
-		huuman.setHumanReadableDescription("This is a testing service for testing purposes. This service is testing features of the Digital Service Platform including the digital service registry and does not provide any value");
-		huuman.setHumanReadableDescriptionURI(TEST_BASE_URL
-				+ "/DSPTestService-0.0.1-SNAPSHOT/humandescription");
-		sDesc.setHumanReadableDescription(huuman);
-
-		TechnicalServiceDescription techDesc1 = new TechnicalServiceDescription();
-		techDesc1.setTechnicalDescriptionURI(TEST_BASE_URL
-				+ "/DSPTestService-0.0.1-SNAPSHOT/?_wadl");
-		techDesc1.setTechnicalServiceAccessProtocol("REST");
-		techDesc1.getImplementedByServiceInstanceId().add("3453535");
-
-		sDesc.getTechnicalServiceDescription().add(techDesc1);
-
-		sRegEntry.setServiceDescription(sDesc);
-
-		ServiceInstance sInst = new ServiceInstance();
-		sInst.setHostingEntity("VTT-ICARE project");
-		sInst.setServiceInstanceVersion("1.0-SNAPSHOT");
-
-		AvailabilityRequestEndPoint avaReqEP = new AvailabilityRequestEndPoint();
-		avaReqEP.setAvailabilityRequestURI(TEST_BASE_URL
-				+ "/DSPTestService-0.0.1-SNAPSHOT/platform/availability");
-		sInst.setAvailabilityRequestEndPoint(avaReqEP);
-
-		BindingRequestEndPoint bindReqEP = new BindingRequestEndPoint();
-		bindReqEP.setBindingRequestURI(TEST_BASE_URL
-				+ "/DSPTestService-0.0.1-SNAPSHOT/platform/bindings");
-		sInst.setBindingRequestEndPoint(bindReqEP);
-
-		fi.vtt.dsp.service.serviceregistry.common.instance.ServiceAccessEndPoint sAEP = new fi.vtt.dsp.service.serviceregistry.common.instance.ServiceAccessEndPoint();
-		sAEP.setServiceAccessURI(TEST_BASE_URL
-				+ "/DSPTestService-0.0.1-SNAPSHOT/hello/echo");
-
-		sInst.setServiceAccessEndPoint(sAEP);
-
-		ServiceAvailability selfRepAva = new ServiceAvailability();
-		selfRepAva.setAverageExecutionTime(0);
-		selfRepAva.setAverageGoodput(0);
-		selfRepAva.setAverageLatency(0);
-		selfRepAva.setMaxResponseTime(0);
-
-		sRegEntry.getServiceInstance().add(sInst);
-		return sRegEntry;
-	}
-
 	public static ServiceRegistryEntry getSample1RegEntry() {
 		int averageGoodput = 100000;
 		int averageLatency = 2;
@@ -115,7 +47,7 @@ public class TestData {
 
 		ServiceDescription sDesc = new ServiceDescription();
 
-		sDesc.setMaturity("ripe");
+		sDesc.setMaturity("In testing");
 		sDesc.setServiceDescriptionTitle("Über cool super-service");
 		sDesc.setServiceDescriptionVersion("0.00000001 Omega");
 		sDesc.setServiceIconURI("http://does.not.exist");
@@ -125,6 +57,8 @@ public class TestData {
 		sDesc.getKeywords().add("testing");
 		sDesc.getKeywords().add("whocares");
 		sDesc.setOwnerGroup("public");
+		
+		sDesc.getServiceDataDescription().add(getServiceDataDescription());		
 
 		AvailabilityDeclaration avDec = new AvailabilityDeclaration();
 
@@ -217,102 +151,6 @@ public class TestData {
 		return sRegEntry;
 	}
 
-	public static ServiceRegistryEntry getSample2RegEntry() {
-		int averageGoodput = 100000;
-		int averageLatency = 2;
-		int maxResponseTime = 2;
-
-		fi.vtt.dsp.service.serviceregistry.common.ObjectFactory of = new fi.vtt.dsp.service.serviceregistry.common.ObjectFactory();
-		ServiceRegistryEntry sRegEntry = of.createServiceRegistryEntry();
-
-		ServiceDescription sDesc = new ServiceDescription();
-
-		sDesc.setMaturity("ripe");
-		sDesc.setServiceDescriptionTitle("The best of all services");
-		sDesc.setServiceDescriptionVersion("0.00000002 Beta");
-		sDesc.setServiceIconURI("http://does.not.exist");
-		sDesc.setServiceProviderId("000000000002");
-		sDesc.setOwnerGroup("public");
-
-		AvailabilityDeclaration avDec = new AvailabilityDeclaration();
-
-		ServiceAvailability declaredAvail = new ServiceAvailability();
-		declaredAvail.setAverageExecutionTime(0);
-		declaredAvail.setAverageGoodput(averageGoodput);
-		declaredAvail.setAverageLatency(averageLatency);
-		declaredAvail.setMaxResponseTime(maxResponseTime);
-
-		avDec.setDeclaredAvailability(declaredAvail);
-		sDesc.setAvailabilityDeclaration(avDec);
-
-		HumanReadableDescription huuman = new HumanReadableDescription();
-		huuman.setHumanReadableDescription("LOREM IPSUM SIG TRANSIT GLORIA MUNDI EX NIHILO NIHIL FIT AD ASTRA Ja höpölöpö sekä kissa vieköön LOREM IPSUM SIG TRANSIT GLORIA MUNDI EX NIHILO NIHIL FIT AD ASTRA Ja höpölöpö sekä kissa vieköön");
-		huuman.setHumanReadableDescription("http://super.duper.li");
-		sDesc.setHumanReadableDescription(huuman);
-
-		sRegEntry.setServiceDescription(sDesc);
-
-		ServiceInstance sInst = new ServiceInstance();
-		sInst.setHostingEntity("Mie Ite");
-		sInst.setServiceInstanceId("001");
-		sInst.setServiceInstanceId("Joku hehkee versio");
-
-		AvailabilityRequestEndPoint avaReqEP = new AvailabilityRequestEndPoint();
-		avaReqEP.setAvailabilityRequestURI("http://diipa.daapa.doop");
-		sInst.setAvailabilityRequestEndPoint(avaReqEP);
-
-		BindingRequestEndPoint bindReqEP = new BindingRequestEndPoint();
-		bindReqEP.setBindingRequestURI("http://darkside.moon.org");
-		sInst.setBindingRequestEndPoint(bindReqEP);
-
-		fi.vtt.dsp.service.serviceregistry.common.instance.ServiceAccessEndPoint sAEP = new fi.vtt.dsp.service.serviceregistry.common.instance.ServiceAccessEndPoint();
-		sAEP.setServiceAccessURI("http://serve.yourself.org");
-		fi.vtt.dsp.service.serviceregistry.common.instance.Availability serviceInstanceAvailability = new fi.vtt.dsp.service.serviceregistry.common.instance.Availability();
-		ServiceAvailability selfRepAva = new ServiceAvailability();
-		selfRepAva.setAverageExecutionTime(0);
-		selfRepAva.setAverageGoodput(0);
-		selfRepAva.setAverageLatency(0);
-		selfRepAva.setMaxResponseTime(0);
-		serviceInstanceAvailability.setSelfReportedAvailability(selfRepAva);
-		sInst.setServiceAccessEndPoint(sAEP);
-
-		sAEP.setAvailability(serviceInstanceAvailability);
-		sInst.setServiceAccessEndPoint(sAEP);
-
-		sRegEntry.getServiceInstance().add(sInst);
-
-		ServiceInstance sInst2 = new ServiceInstance();
-		sInst2.setHostingEntity("Mie Ite");
-		sInst2.setServiceInstanceId("001");
-		sInst2.setServiceInstanceId("Joku hehkee versio");
-
-		AvailabilityRequestEndPoint avaReqEP2 = new AvailabilityRequestEndPoint();
-		avaReqEP2.setAvailabilityRequestURI("http://diipa.daapa.doop");
-		sInst2.setAvailabilityRequestEndPoint(avaReqEP2);
-
-		BindingRequestEndPoint bindReqEP2 = new BindingRequestEndPoint();
-		bindReqEP2.setBindingRequestURI("http://darkside.moon.org");
-		sInst2.setBindingRequestEndPoint(bindReqEP);
-
-		fi.vtt.dsp.service.serviceregistry.common.instance.ServiceAccessEndPoint sAEP2 = new fi.vtt.dsp.service.serviceregistry.common.instance.ServiceAccessEndPoint();
-		sAEP2.setServiceAccessURI("http://serve.yourself.org");
-		fi.vtt.dsp.service.serviceregistry.common.instance.Availability serviceInstanceAvailability2 = new fi.vtt.dsp.service.serviceregistry.common.instance.Availability();
-		ServiceAvailability selfRepAva2 = new ServiceAvailability();
-		selfRepAva2.setAverageExecutionTime(0);
-		selfRepAva2.setAverageGoodput(0);
-		selfRepAva2.setAverageLatency(0);
-		selfRepAva2.setMaxResponseTime(0);
-		serviceInstanceAvailability2.setSelfReportedAvailability(selfRepAva2);
-		sInst2.setServiceAccessEndPoint(sAEP2);
-
-		sAEP2.setAvailability(serviceInstanceAvailability2);
-		sInst2.setServiceAccessEndPoint(sAEP2);
-
-		sRegEntry.getServiceInstance().add(sInst2);
-
-		return sRegEntry;
-	}
-
 	public static UserProfile getUserProfile1() {
 		UserProfile up = new UserProfile();
 		up.setEmail("dude1.test@test.com");
@@ -364,11 +202,13 @@ public class TestData {
 
 		ServiceDescription sDesc = new ServiceDescription();
 
-		sDesc.setMaturity("ripe");
+		sDesc.setMaturity("In testing");
 		sDesc.setServiceDescriptionTitle("Test service for testing functionalities of the Digital Service Registry including service registry");
 		sDesc.setServiceDescriptionVersion("1.0");
 		sDesc.setServiceIconURI("http://t3.gstatic.com/images?q=tbn:ANd9GcT0XfMvymAQKUVmC_iUmHPVoAOY613IPsGXDNFEBU4uK08ZXqOhIrRiz48");
 		sDesc.setOwnerGroup("public");
+		
+		sDesc.getServiceDataDescription().add(getServiceDataDescription());		
 
 		AvailabilityDeclaration avDec = new AvailabilityDeclaration();
 
@@ -462,51 +302,6 @@ public class TestData {
 		return sRegEntry;
 	}
 
-	public static ServiceRegistryEntry getEntryForDSPTestServiceQueried() {
-		fi.vtt.dsp.service.serviceregistry.common.ObjectFactory of = new fi.vtt.dsp.service.serviceregistry.common.ObjectFactory();
-		ServiceRegistryEntry sRegEntry = of.createServiceRegistryEntry();
-
-		ServiceDescription sDesc = new ServiceDescription();
-
-		sDesc.setMaturity("ripe");
-		sDesc.setServiceDescriptionTitle("Test service for testing functionalities of the Digital Service Registry including service registry");
-		sDesc.setServiceDescriptionVersion("1.0");
-		sDesc.setServiceIconURI("http://t3.gstatic.com/images?q=tbn:ANd9GcT0XfMvymAQKUVmC_iUmHPVoAOY613IPsGXDNFEBU4uK08ZXqOhIrRiz48");
-		sDesc.setOwnerGroup("public");
-
-		TechnicalServiceDescription techDesc1 = new TechnicalServiceDescription();
-		techDesc1.setTechnicalDescriptionURI(TEST_BASE_URL
-				+ "/DSPTestService-0.0.1-SNAPSHOT/?_wad");
-		techDesc1.setTechnicalServiceAccessProtocol("REST");
-		techDesc1.getImplementedByServiceInstanceId().add("13565789");
-
-		sDesc.getTechnicalServiceDescription().add(techDesc1);
-
-		sRegEntry.setServiceDescription(sDesc);
-
-		ServiceInstance sInst = new ServiceInstance();
-		sInst.setHostingEntity("VTT-ICARE project");
-		sInst.setServiceInstanceVersion("1.0-SNAPSHOT");
-		sInst.setServiceInstanceId("13565789");
-
-		AvailabilityRequestEndPoint avaReqEP = new AvailabilityRequestEndPoint();
-		avaReqEP.setAvailabilityRequestURI(TEST_BASE_URL
-				+ "/DSPTestService-0.0.1-SNAPSHOT/platform/availability");
-		sInst.setAvailabilityRequestEndPoint(avaReqEP);
-
-		BindingRequestEndPoint bindReqEP = new BindingRequestEndPoint();
-		bindReqEP.setBindingRequestURI(TEST_BASE_URL
-				+ "/DSPTestService-0.0.1-SNAPSHOT/platform/bindings");
-		sInst.setBindingRequestEndPoint(bindReqEP);
-
-		fi.vtt.dsp.service.serviceregistry.common.instance.ServiceAccessEndPoint sAEP = new fi.vtt.dsp.service.serviceregistry.common.instance.ServiceAccessEndPoint();
-		sAEP.setServiceAccessURI(TEST_BASE_URL
-				+ "/DSPTestService-0.0.1-SNAPSHOT/hello/echo");
-		sInst.setServiceAccessEndPoint(sAEP);
-		sRegEntry.getServiceInstance().add(sInst);
-		return sRegEntry;
-	}
-
 	public static UserProfile getUserProfile() {
 		UserProfile up = new UserProfile();
 		up.setEmail("test." + System.currentTimeMillis() + random.nextInt()
@@ -529,7 +324,7 @@ public class TestData {
 
 		ServiceDescription sDesc = new ServiceDescription();
 
-		sDesc.setMaturity("test");
+		sDesc.setMaturity("In testing");
 		sDesc.setServiceDescriptionTitle("Test service for testing functionalities of the Digital Service Registry including service registry");
 		sDesc.setServiceDescriptionVersion("1.0");
 		sDesc.setServiceIconURI("http://does.not.exist");
@@ -545,6 +340,8 @@ public class TestData {
 		sDesc.setHumanReadableDescription(getHumanReadableDescription());
 		sDesc.getTechnicalServiceDescription().add(
 				getTechnicalServiceDescription());
+		
+		sDesc.getServiceDataDescription().add(getServiceDataDescription());
 
 		sRegEntry.setServiceDescription(sDesc);
 
@@ -589,6 +386,77 @@ public class TestData {
 		techDesc1.setTechnicalDescriptionId(Long.toString(System
 				.currentTimeMillis()));
 		return techDesc1;
+	}
+	
+	public static ServiceDataDescription getServiceDataDescription() {
+		
+		final ServiceDataDescription sdd = new ServiceDataDescription();	
+		sdd.setDescription(""
+			+ "Wellness Warehouse Engine (W2E) is a tool for collecting user's wellness related data. "
+			+ "Data can be related to activity, measurements or sleep and it can be requested as raw, "
+			+ "unify and category data. For each type is defined its own API description. "
+			+ "See documentation at https://w2e.fi/doc/introduction.html");
+		sdd.setTitle("Service data description of Wellness Warehouse Engine");
+		sdd.setServiceDataDescriptionUri("https://w2e.fi/doc/dhr/w2e.rdf");
+		sdd.setSchemaId("testSchemaId");
+		sdd.setServiceSchema("http://schema.org/testschema");
+		sdd.setIssued(1453031943);
+		sdd.setModified(1453118343);
+		sdd.setTaxonomy("http://taxonomies.com/testTaxonomy");
+		sdd.getSubject().add("http://ontologyx.com/subjects#testsubject");
+		
+		final Dataset dataset = new Dataset();
+		sdd.getDataset().add(dataset);		
+		dataset.setTitle("Category data- get measure");
+		dataset.setDescription(""
+			+ "Data is grouped from all available sources into categories. "
+			+ "This describes measure category. See documentation at http://w2.e.fi/doc/data_category.html");
+		dataset.setLanguage("Fi");
+		dataset.setPublisher("VTT");
+		dataset.setServiceDataType("http://www.w3.org/2001/XMLSchema#string");
+		dataset.setSpatial("Test spatial coverage");
+		dataset.setTemporal("Test temporal coverage");
+		dataset.setContactPoint("datacreator@vtt.fi");
+		dataset.setAccrualPeriodicity("once a month");
+		dataset.setIssued(1453031943);
+		dataset.setModified(1453118343);
+		dataset.getKeyword().add("weight");
+		dataset.getKeyword().add("blood pressure");
+		dataset.getKeyword().add("heart rate");
+		dataset.getKeyword().add("Fitbit");
+		dataset.getKeyword().add("Runkeeper");
+		dataset.getKeyword().add("Withings");
+		dataset.getSubject().add("http://ontologyx.com/subjects#testsubject");
+		dataset.getTheme().add("http://ontologyx.com/themes#testTheme");
+		
+		final Distribution dist = new Distribution();
+		dataset.getDistribution().add(dist);		
+		dist.setTitle("");
+		dist.setAccessURL("https://w2e.fi/doc/data_category.html");
+		dist.setDownloadURL("https://w2e.fi/doc/download?id=12345");
+		dist.setFormat("application/json");
+		dist.setRights("http://www.apache.org/licenses/LICENSE-2.0");
+		dist.setTechnicalDescriptionURI("");
+		dist.setIssued(1453031943);
+		dist.setModified(1453118343);		
+		
+		final DataStructureSpecification dsSpec = new DataStructureSpecification();
+		dataset.getStructure().add(dsSpec);
+		dsSpec.setDescription("Test data structure specification");
+		
+		final ComponentSpecification cSpec = new ComponentSpecification();
+		dsSpec.getComponent().add(cSpec);		
+		cSpec.setComponentRequired(true);
+		cSpec.setLabel("heartRate");
+		
+		final ComponentProperty cProp = new ComponentProperty();
+		cSpec.getComponentProperty().add(cProp);
+		cProp.setLabel("heart rate {@en}");
+		cProp.setRange("http://www.w3.org/2001/XMLSchema#int");
+		cProp.setConcept("http://www.yso.fi/onto/mesh/DO06339");
+		cProp.setCodeList("http://dhr.fi/codelist");
+
+		return sdd;
 	}
 
 	public static UserFeedback getUserFeedback(UserProfile user) {
@@ -707,28 +575,10 @@ public class TestData {
 		return up;
 	}
 
-	public static UserProfile createUserProfile1() {
-		UserProfile up = createUserProfile();
-		up.setEmail("test1.icare@vtt.fi");
-		return up;
-	}
-
-	public static UserProfile createInvalidUserProfile() {
-		UserProfile up = createUserProfile();
-		up.setEmail("?!@*~X@%");
-		return up;
-	}
-
 	public static Dependency createDependency() {
 		Dependency dep = new Dependency();
 		dep.setDependencyId("depId");
 		dep.setDependsOnServiceId("servId");
-		return dep;
-	}
-
-	public static Dependency createDependency1() {
-		Dependency dep = createDependency();
-		dep.setDependencyId("depId1");
 		return dep;
 	}
 
@@ -738,15 +588,9 @@ public class TestData {
 		return avDec;
 	}
 
-	public static AvailabilityDeclaration createAvailabilityDeclaration1() {
-		AvailabilityDeclaration avDec = createAvailabilityDeclaration();
-		avDec.setDeclaredAvailability(createServiceAvailability1());
-		return avDec;
-	}
-
 	public static ServiceDescription createServiceDescription() {
 		ServiceDescription sDesc = new ServiceDescription();
-		sDesc.setMaturity("ripe");
+		sDesc.setMaturity("In testing");
 		sDesc.setServiceDescriptionTitle("Über cool super-service");
 		sDesc.setServiceDescriptionVersion("0.00000001 Omega");
 		sDesc.setServiceIconURI("http://does.not.exist");
@@ -758,12 +602,9 @@ public class TestData {
 		sDesc.setAvailabilityDeclaration(createAvailabilityDeclaration());
 		sDesc.getDependency().add(createDependency());
 		sDesc.setOwnerGroup("public");
-		return sDesc;
-	}
-
-	public static ServiceDescription createServiceDescription1() {
-		ServiceDescription sDesc = new ServiceDescription();
-		sDesc.setMaturity("raw");
+		
+		sDesc.getServiceDataDescription().add(getServiceDataDescription());
+		
 		return sDesc;
 	}
 
@@ -822,41 +663,12 @@ public class TestData {
 		return sRegEntry;
 	}
 
-	public static ServiceRegistryEntry createInvalidServiceRegistryEntry1() {
-		ServiceRegistryEntry sre = createServiceRegistryEntry();
-		sre.getServiceInstance().remove(0);
-		sre.getServiceInstance().add(createInvalidServiceInstance1());
-		return sre;
-	}
-
 	public static TechnicalServiceDescription createTechnicalServiceDescription() {
 		TechnicalServiceDescription techDesc1 = new TechnicalServiceDescription();
 		techDesc1.setTechnicalDescriptionURI("http://here.and.there");
 		techDesc1.setTechnicalServiceAccessProtocol("REST");
 		techDesc1.getImplementedByServiceInstanceId().add("3453535");
 		return techDesc1;
-	}
-
-	public static TechnicalServiceDescription createTechnicalServiceDescription1() {
-		TechnicalServiceDescription techDesc1 = createTechnicalServiceDescription();
-		techDesc1
-				.setTechnicalDescriptionURI("http://here.and.there/and.everywhere");
-		techDesc1.setTechnicalServiceAccessProtocol("REST");
-		techDesc1.getImplementedByServiceInstanceId().add("3453535");
-		return techDesc1;
-	}
-
-	public static HumanReadableDescription createHumanReadableDescription() {
-		HumanReadableDescription human = new HumanReadableDescription();
-		human.setHumanReadableDescription("LOREM IPSUM SIG TRANSIT GLORIA MUNDI EX NIHILO NIHIL FIT AD ASTRA Ja hÃ¶pÃ¶lÃ¶pÃ¶ sekÃ¤ kissa viekÃ¶Ã¶n LOREM IPSUM SIG TRANSIT GLORIA MUNDI EX NIHILO NIHIL FIT AD ASTRA Ja hÃ¶pÃ¶lÃ¶pÃ¶ sekÃ¤ kissa viekÃ¶Ã¶n");
-		human.setHumanReadableDescriptionURI("http://super.duper.li");
-		return human;
-	}
-
-	public static HumanReadableDescription createHumanReadableDescription1() {
-		HumanReadableDescription human = createHumanReadableDescription();
-		human.setHumanReadableDescription("Human readable description 1.");
-		return human;
 	}
 
 	public static ServiceAvailability createServiceAvailability() {
@@ -868,12 +680,6 @@ public class TestData {
 		sa.setServiceActive(false);
 		sa.setTimeStamp(System.currentTimeMillis());
 		sa.setUptimeHours(1);
-		return sa;
-	}
-
-	public static ServiceAvailability createServiceAvailability1() {
-		ServiceAvailability sa = createServiceAvailability();
-		sa.setAverageExecutionTime(2);
 		return sa;
 	}
 
@@ -898,29 +704,9 @@ public class TestData {
 		return ep;
 	}
 
-	public static AvailabilityRequestEndPoint createAvailabilityRequestEndPoint1() {
-		AvailabilityRequestEndPoint ep = createAvailabilityRequestEndPoint();
-		ep.setAvailabilityRequestURI("http://bar.foo");
-		return ep;
-	}
-
 	public static BindingRequestEndPoint createBindingRequestEndPoint() {
 		BindingRequestEndPoint ep = new BindingRequestEndPoint();
 		ep.setBindingRequestURI("http://foo.bar");
-		return ep;
-	}
-
-	public static BindingRequestEndPoint createBindingRequestEndPoint1() {
-		BindingRequestEndPoint ep = createBindingRequestEndPoint();
-		ep.setBindingRequestURI("http://bar.foo");
-		return ep;
-	}
-
-	public static BindingRequestEndPoint createInvalidBindingRequestEndPoint() {
-		BindingRequestEndPoint ep = createBindingRequestEndPoint();
-		// ep.setBindingRequestURI(OVERLONG_RANDOM_STRING);
-		ep.setBindingRequestURI(null);
-
 		return ep;
 	}
 
@@ -951,12 +737,6 @@ public class TestData {
 		return ep;
 	}
 
-	public static ServiceAccessEndPoint createServiceAccessEndPoint1() {
-		ServiceAccessEndPoint ep = createServiceAccessEndPoint();
-		ep.setServiceAccessURI("http://bar.foo");
-		return ep;
-	}
-
 	public static ServiceInstance createServiceInstance() {
 		ServiceInstance si = new ServiceInstance();
 		si.setAvailabilityRequestEndPoint(createAvailabilityRequestEndPoint());
@@ -974,18 +754,6 @@ public class TestData {
 		si.setServiceInstanceId("1234");
 		si.setServiceInstanceVersion("1.0");
 		// si.setUserProfile(createUserProfile());
-		return si;
-	}
-
-	public static ServiceInstance createServiceInstance1() {
-		ServiceInstance si = createServiceInstance();
-		si.setServiceInstanceVersion("0.1");
-		return si;
-	}
-
-	public static ServiceInstance createInvalidServiceInstance1() {
-		ServiceInstance si = createServiceInstance();
-		si.setServiceInstanceVersion(OVERLONG_RANDOM_STRING);
 		return si;
 	}
 }
