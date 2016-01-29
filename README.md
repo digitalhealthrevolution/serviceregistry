@@ -1,10 +1,9 @@
-# Service Registry
+# DHR Service Registry
 
-A key component for service oriented integration and interworking framework for ICT based solutions and 
-offerings of organizations without technology limitations or vendor lock in.
+Fork of [Digital Service Hub's Service Registry](https://github.com/digitalserviceshub/serviceregistry)
 
-This software forms the central part of the [Digital Services Hub](https://www.digitalserviceshub.com) 
-digital services brokering environment.
+- Adds a new service data description model to service descriptions.
+- Extends the existing API with CRUD operations for managing the service data description resources.
 
 # Requirements
 
@@ -21,7 +20,7 @@ Add build profile(s) to your local maven settings.xml and set parameters accordi
   <profile>
     <id>development</id>
     <properties>
-      <auth.secret>[authentication secret]</auth.secret>				
+      <auth.secret>[authentication secret]</auth.secret>
       <db.ip>[mongodb address]</db.ip>
       <db.port>[mongodb port]</db.port>
       <db.name>[mongodb database]</db.name>
@@ -29,23 +28,23 @@ Add build profile(s) to your local maven settings.xml and set parameters accordi
       <db.pwd>[mongodb user password]</db.pwd>
       <as.ip>[service registry deployment address]</as.ip>
       <as.port>[service registry deployment port]</as.port>
-      <mail.smtp.host>[smtp mail server host]</mail.smtp.host>				
-      <mail.smtp.port>[smtp mail server port</mail.smtp.port>				
-      <mail.smtp.timeout>[smtp mail service connection timeout]</mail.smtp.timeout>			
-    </properties>			
+      <mail.smtp.host>[smtp mail server host]</mail.smtp.host>
+      <mail.smtp.port>[smtp mail server port</mail.smtp.port>
+      <mail.smtp.timeout>[smtp mail service connection timeout]</mail.smtp.timeout>
+    </properties>
   </profile>
   <profile>
     <id>testing</id>
     <properties>
       ...
-    </properties>			
+    </properties>
    </profile>
   <profile>
   <profile>
     <id>production</id>
     <properties>
       ...
-    </properties>			
+    </properties>
    </profile>
   <profile>
 </profiles>
