@@ -156,6 +156,11 @@
 					<xsd:documentation>A name given to the dataset. In multiple languages</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="purpose" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Defines the purpose for which a service uses the data.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="Distribution">
@@ -289,6 +294,11 @@
 			<xsd:element name="broader" type="xsd:string" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>Links to concept that is more general in meaning</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="narrower" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Links to concept that is more specific in meaning</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="closeMatch" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
